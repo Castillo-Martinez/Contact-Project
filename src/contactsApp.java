@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.awt.geom.Path2D.contains;
+
 public class contactsApp {
 
 
@@ -62,8 +64,19 @@ public class contactsApp {
             e.printStackTrace();
         }
     }
-    private static void searchContact(){
+    private static void searchContact(String search){
+        Path filepath = Paths.get("data", "contacts.txt");
+        Input in = new Input();
+        List<String> lines;
+        List<Contact> contacts = new ArrayList<>();
+        for (Contact c : contacts ){
+            if (contains (c.firstName(), search)
+        }
 
+    }
+
+    private static boolean contains(String firstName) {
+        return true;
     }
 }
 

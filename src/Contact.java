@@ -33,4 +33,6 @@ public class Contact {
 
     public String lastName;
     public String phoneNumber;
+
+
 }
