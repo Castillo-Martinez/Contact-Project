@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,12 @@ public class contactsApp {
             displayContacts();
         } else if (userInput == 2) {
             addContact();
+        } else if (userInput == 3) {
+            searchContact("");
+        }else if (userInput == 4) {
+            deleteContact("");
+        }else if (userInput == 5) {
+            System.out.println("Thank you for using our App!!");
         }
     }
 
@@ -35,6 +42,7 @@ public class contactsApp {
         List<String> lines;
         try {
             lines = Files.readAllLines(filepath);
+            System.out.printf("Name  | Phone number%n ---------------%n");
             for (String line : lines) {
                 System.out.printf("%s%n", line);
             }
@@ -50,6 +58,7 @@ public class contactsApp {
         List<Contact> contacts = new ArrayList<>();
         try {
             lines = Files.readAllLines(filepath);
+            System.out.printf("Name  | Phone number%n ---------------%n");
             for (String line : lines) {
                 String[] splitStr = line.split("|");
                 contacts.add(new Contact(splitStr[0], splitStr[1]));
@@ -64,19 +73,44 @@ public class contactsApp {
             e.printStackTrace();
         }
     }
-    private static void searchContact(String search){
+    private static void searchContact(String search) {
         Path filepath = Paths.get("data", "contacts.txt");
         Input in = new Input();
+        String firstNamesearch = in.getString("who's number are you looking for");
         List<String> lines;
-        List<Contact> contacts = new ArrayList<>();
-        for (Contact c : contacts ){
-            if (contains (c.firstName(), search)
+//        List<Contact> contacts = new ArrayList<>();
+        try {
+            lines = Files.readAllLines(filepath);
+            System.out.printf("Name  | Phone number%n ---------------%n");
+        for (String line : lines) {
+            if (line.toLowerCase().contains(firstNamesearch)) {
+                System.out.println(line);
+            }
         }
-
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static boolean contains(String firstName) {
-        return true;
-    }
+        private static StringBuilder deleteContact(String search) {
+            Path filepath = Paths.get("data", "contacts.txt");
+            Input in = new Input();
+            String Namedelete = in.getString("who's contact do you want to delete");
+            List<String> lines;
+            try {
+                lines = Files.readAllLines(filepath);
+                System.out.printf("Name  | Phone number%n ---------------%n");
+                StringBuilder newline = new StringBuilder();
+                for (String line : lines) {
+                    if (line.toLowerCase().contains(Namedelete)) {
+                        continue;
+                    }
+                    newline.append(line).append("\n");
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return new StringBuilder();
+        }
 }
-
